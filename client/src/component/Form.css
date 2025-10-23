@@ -1,0 +1,94 @@
+/* src/component/Form.css */
+
+body {
+  background: linear-gradient(135deg, #3a8ef6, #6f42c1);
+  font-family: 'Inter', sans-serif;
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.form-container {
+  background: #fff;
+  padding: 2rem 2.5rem;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  width: 360px;
+  text-align: center;
+  animation: fadeIn 0.4s ease-in-out;
+}
+
+.form-container h2 {
+  color: #333;
+  margin-bottom: 1.5rem;
+  font-weight: 600;
+}
+
+.form-container input {
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 15px;
+  transition: all 0.2s ease;
+}
+
+.form-container input:focus {
+  outline: none;
+  border-color: #3a8ef6;
+  box-shadow: 0 0 5px rgba(58, 142, 246, 0.3);
+}
+
+.form-container button {
+  width: 100%;
+  background: #3a8ef6;
+  color: #fff;
+  border: none;
+  padding: 12px;
+  margin-top: 10px;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.form-container button:hover {
+  background: #2f76db;
+}
+
+.form-container p {
+  margin-top: 1rem;
+  color: #555;
+  font-size: 14px;
+}
+
+.form-container a {
+  color: #3a8ef6;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.form-container a:hover {
+  text-decoration: underline;
+}
+
+.error {
+  color: #ff3b3b;
+  font-size: 14px;
+  margin-top: 5px;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

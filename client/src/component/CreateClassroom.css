@@ -1,0 +1,104 @@
+/* CreateClassroom.css
+   Minimal, scoped rules that reuse Dashboard look & feel.
+*/
+
+/* Ensure it sits inside the dashboard main area */
+.create-classroom-inner {
+  margin: 0 auto;
+  width: 100%;
+  max-width: 900px;          /* same scale as assignment grid columns */
+  padding: 20px;             /* consistent inner padding with main content */
+  box-sizing: border-box;
+}
+
+/* Generic card style — matches assignment & stats cards in Dashboard.css */
+.card {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  border: 1px solid rgba(15, 23, 42, 0.04);
+}
+
+/* Slightly larger card for create form */
+.create-classroom-card {
+  max-width: 480px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+/* Heading */
+.create-classroom-card h2 {
+  margin: 0 0 16px;
+  font-size: 1.5rem;
+  color: #111827; /* matches dashboard headings */
+}
+
+/* Form layout */
+.create-classroom-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Input — match assignment input styles */
+.create-classroom-form input {
+  padding: 12px 14px;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+  font-size: 1rem;
+  outline: none;
+  transition: border-color .15s ease, box-shadow .15s ease;
+}
+
+.create-classroom-form input:focus {
+  border-color: #4f9efc; /* same blue accent as dashboard */
+  box-shadow: 0 0 0 3px rgba(79,158,252,0.08);
+}
+
+/* Primary button — reuse dashboard primary color */
+.primary-btn {
+  background: #4f9efc;
+  color: #fff;
+  border: none;
+  padding: 12px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background .15s ease, transform .08s ease;
+}
+
+.primary-btn:hover {
+  background: #3b82f6;
+  transform: translateY(-1px);
+}
+
+/* Message that appears after submit */
+.form-message {
+  margin-top: 12px;
+  font-size: 0.95rem;
+  color: #374151;
+  background: #f8fafc;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid #eef2ff;
+}
+
+/* Mobile adjustments (keeps sidebar spacing in mind) */
+@media (max-width: 900px) {
+  .create-classroom-inner {
+    padding: 16px;
+    max-width: 700px;
+  }
+}
+
+@media (max-width: 700px) {
+  .create-classroom-inner {
+    padding: 12px;
+    max-width: 100%;
+  }
+  .create-classroom-card {
+    width: 100%;
+    padding: 18px;
+  }
+}

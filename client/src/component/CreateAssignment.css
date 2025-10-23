@@ -1,0 +1,75 @@
+.create-assignment {
+  background: #fff;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+  width: 100%;
+  max-width: 600px;
+  margin: 60px auto;
+  font-family: "Poppins", sans-serif;
+  transition: 0.3s ease;
+}
+
+/* Heading */
+.create-assignment h2 {
+  text-align: center;
+  margin-bottom: 25px;
+  color: #222;
+}
+
+/* Form Layout */
+.create-assignment form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+/* Inputs and Textarea */
+.create-assignment input,
+.create-assignment textarea {
+  padding: 12px 15px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+.create-assignment input:focus,
+.create-assignment textarea:focus {
+  border-color: var(--accent-color, #4f9efc);
+}
+
+/* Button */
+.create-assignment button {
+  background: var(--accent-color, #4f9efc);
+  color: #fff;
+  border: none;
+  padding: 12px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.create-assignment button:hover {
+  background: #3b82f6;
+}
+
+/* Message */
+.create-assignment p {
+  text-align: center;
+  margin-top: 15px;
+  font-weight: 500;
+}
+
+/* ===== Role-based themes ===== */
+.create-assignment.teacher {
+  --accent-color: #e67e22; /* orange */
+  border-top: 4px solid var(--accent-color);
+}
+
+.create-assignment.student {
+  --accent-color: #3498db; /* blue */
+  border-top: 4px solid var(--accent-color);
+}

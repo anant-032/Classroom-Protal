@@ -1,0 +1,133 @@
+.student-dashboard {
+  display: flex;
+  height: 100vh;
+  background-color: #f3f6fb;
+  font-family: "Poppins", sans-serif;
+}
+
+.sidebar {
+  width: 240px;
+  background-color: #1e1f38;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 2rem 1rem;
+}
+
+.sidebar h2 {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #4d79ff;
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+}
+
+.sidebar li {
+  padding: 0.8rem 0;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.sidebar li:hover {
+  color: #4d79ff;
+}
+
+.logout-btn {
+  background-color: #e74c3c;
+  border: none;
+  padding: 0.8rem;
+  color: white;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.logout-btn:hover {
+  background-color: #c0392b;
+}
+
+.dashboard-content {
+  flex: 1;
+  padding: 2rem;
+}
+
+.dashboard-content h1 {
+  text-align: center;
+  color: #3366ff;
+  margin-bottom: 1rem;
+}
+
+.dashboard-content h2 {
+  font-size: 1.5rem;
+}
+
+.dashboard-content h2 span {
+  color: #4d79ff;
+}
+
+.stats {
+  display: flex;
+  gap: 1rem;
+  margin: 2rem 0;
+}
+
+.stat-box {
+  flex: 1;
+  border-radius: 10px;
+  color: white;
+  text-align: center;
+  padding: 1.5rem;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+}
+
+.stat-box.total {
+  background-color: #4d79ff;
+}
+
+.stat-box.upcoming {
+  background-color: #f1c40f;
+}
+
+.stat-box.completed {
+  background-color: #27ae60;
+}
+
+.assignments-section h3 {
+  font-size: 1.3rem;
+  margin-bottom: 1rem;
+}
+
+.assignments-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.assignment-card {
+  background-color: #fff;
+  border-radius: 10px;
+  padding: 1rem;
+  width: 250px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.assignment-card button {
+  background-color: #4d79ff;
+  color: white;
+  border: none;
+  padding: 0.6rem;
+  border-radius: 6px;
+  margin-top: 0.5rem;
+  width: 100%;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.assignment-card button:hover {
+  background-color: #335dff;
+}
