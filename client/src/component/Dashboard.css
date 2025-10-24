@@ -275,3 +275,16 @@ html, body, #root {
     font-size: 1.3rem;
   }
 }
+/* ===== Expired Button Style ===== */
+.assignment-card button.expired {
+  background: #e74c3c;
+  color: #fff;
+  cursor: not-allowed;
+  box-shadow: none;
+  opacity: 0.85;
+}
+
+.assignment-card button.expired:hover {
+  background: #e74c3c; /* no hover effect for expired */
+  transform: none;
+}

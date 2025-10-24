@@ -75,32 +75,42 @@ function Dashboard() {
           <p className="empty">No assignments found.</p>
         ) : (
           <div className="assignment-grid">
-            {assignments.map((a) => (
-              <div key={a._id} className="assignment-card">
-                <h3>{a.title}</h3>
-                <p className="due">
-                  Due: {new Date(a.dueDate).toLocaleDateString()}
-                </p>
+            {assignments.map((a) => {
+              const isExpired = new Date(a.dueDate) < new Date();
 
-                {role === "teacher" ? (
-                  <>
-                    <button onClick={() => navigate(`/view-submissions/${a._id}`)}>
-                      View Submissions
-                    </button>
-                    <button onClick={() => navigate(`/edit-assignment/${a._id}`)}>
-                      Edit
-                    </button>
-                  </>
-                ) : (
-                  <>
-                    <button onClick={() => navigate(`/submit/${a._id}`)}>Submit</button>
-                    <button onClick={() => navigate(`/view-feedback/${a._id}`)}>
-                      View Feedback
-                    </button>
-                  </>
-                )}
-              </div>
-            ))}
+              return (
+                <div key={a._id} className="assignment-card">
+                  <h3>{a.title}</h3>
+                  <p className="due">
+                    Due: {new Date(a.dueDate).toLocaleDateString()}
+                  </p>
+
+                  {role === "teacher" ? (
+                    <>
+                      <button onClick={() => navigate(`/view-submissions/${a._id}`)}>
+                        View Submissions
+                      </button>
+                      <button onClick={() => navigate(`/edit-assignment/${a._id}`)}>
+                        Edit
+                      </button>
+                    </>
+                  ) : (
+                    <>
+                      {isExpired ? (
+                        <button className="expired" disabled>
+                          Expired
+                        </button>
+                      ) : (
+                        <button onClick={() => navigate(`/submit/${a._id}`)}>Submit</button>
+                      )}
+                      <button onClick={() => navigate(`/view-feedback/${a._id}`)}>
+                        View Feedback
+                      </button>
+                    </>
+                  )}
+                </div>
+              );
+            })}
           </div>
         )}
       </section>
