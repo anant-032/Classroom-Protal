@@ -37,7 +37,7 @@ function DashboardLayout({ children }) {
               <li onClick={() => navigate("/create-classroom")}>
                 <FiUsers /> Create Classroom
               </li>
-              <li onClick={() => navigate("/create")}>
+              <li onClick={() => navigate("/create-assignment")}>
                 <FiPlusCircle /> Create Assignment
               </li>
             </>

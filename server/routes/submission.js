@@ -3,15 +3,22 @@ const multer = require("multer");
 const path = require("path");
 const Submission = require("../models/Submission.js");
 const Assignment = require("../models/Assignment.js");
-
 const router = express.Router();
+
+const fs = require("fs");
+
+// ensure uploads folder exists
+const uploadsDir = path.resolve(__dirname, "../uploads");
+if (!fs.existsSync(uploadsDir)) {
+  fs.mkdirSync(uploadsDir);
+}
 
 // ------------------------------
 // MULTER SETUP
 // ------------------------------
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, path.join(__dirname, "../uploads")); // store in /server/uploads
+    cb(null, path.resolve(__dirname, "../uploads")); // store in /server/uploads
   },
   filename: function (req, file, cb) {
     const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
@@ -25,13 +32,21 @@ const upload = multer({ storage });
 // POST /api/submission
 // STUDENT: Submit an assignment
 // ------------------------------
+// ------------------------------
+// POST /api/submission
+// STUDENT: Submit an assignment
+// ------------------------------
 router.post("/", upload.single("file"), async (req, res) => {
   try {
     const { student, assignment } = req.body;
 
     // validate fields
-    if (!student || !assignment || !req.file) {
-      return res.status(400).json({ message: "Missing required fields" });
+    if (!student || !assignment) {
+      return res.status(400).json({ message: "Missing student or assignment ID" });
+    }
+
+    if (!req.file) {
+      return res.status(400).json({ message: "No file uploaded" });
     }
 
     // check if assignment exists
@@ -43,9 +58,7 @@ router.post("/", upload.single("file"), async (req, res) => {
     // prevent duplicate submission
     const alreadySubmitted = await Submission.findOne({ student, assignment });
     if (alreadySubmitted) {
-      return res
-        .status(400)
-        .json({ message: "You already submitted this assignment" });
+      return res.status(400).json({ message: "You already submitted this assignment" });
     }
 
     // construct file URL
@@ -61,17 +74,17 @@ router.post("/", upload.single("file"), async (req, res) => {
 
     await newSubmission.save();
 
-    res
-      .status(201)
-      .json({
-        message: "Submission uploaded successfully",
-        submission: newSubmission,
-      });
+    return res.status(201).json({
+      message: "Submission uploaded successfully",
+      submission: newSubmission,
+    });
   } catch (error) {
-    console.error("Error submitting assignment:", error);
-    res.status(500).json({ message: "Server error" });
+    console.error("❌ Error submitting assignment:", error);
+    res.status(500).json({ message: "Server error", error: error.message });
   }
 });
+
+
 
 // ------------------------------
 // GET /api/submission/:assignmentId
@@ -91,5 +104,48 @@ router.get("/:assignmentId", async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 });
+
+// ------------------------------
+// PUT /api/submission/:id
+// STUDENT: Edit (resubmit) an assignment
+// ------------------------------
+router.put("/:id", upload.single("file"), async (req, res) => {
+  try {
+    const { id } = req.params; // submission id
+    const submission = await Submission.findById(id);
+
+    if (!submission) {
+      return res.status(404).json({ message: "Submission not found" });
+    }
+
+    // check if file is provided
+    if (!req.file) {
+      return res.status(400).json({ message: "No new file uploaded" });
+    }
+
+    // delete old file if exists
+    if (submission.fileUrl) {
+      const oldPath = path.resolve(__dirname, `..${submission.fileUrl}`);
+      if (fs.existsSync(oldPath)) {
+        fs.unlinkSync(oldPath);
+      }
+    }
+
+    // update file url
+    submission.fileUrl = `/uploads/${req.file.filename}`;
+    submission.submissionDate = new Date();
+
+    await submission.save();
+
+    res.status(200).json({
+      message: "Submission updated successfully",
+      submission,
+    });
+  } catch (error) {
+    console.error("❌ Error updating submission:", error);
+    res.status(500).json({ message: "Server error", error: error.message });
+  }
+});
+
 
 module.exports = router;

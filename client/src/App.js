@@ -2,14 +2,16 @@ import { BrowserRouter as Router, Routes, Route, useLocation } from "react-route
 import Login from "./component/Login";
 import Register from "./component/Register";
 import Dashboard from "./component/Dashboard";
-import CreateAssignment from "./component/CreateAssignment";
+import CreateAssignment from "./component/assignments/CreateAssignment";
 import CreateClassroom from "./component/CreateClassroom";
 import JoinClassroom from "./component/JoinClassroom";
 import ClassroomList from "./component/ClassroomList";
 import SubmitAssignment from "./component/assignments/SubmitAssignment";
+import DashboardLayout from "./component/DashboardLayout";
+
 import ProtectedRoute from "./component/ProtectedRoute";
-// import SubmitAssignment from "./component/SubmitAssignment";
-// import SubmitAssignment from "./component/SubmitAssignment";
+import ViewSubmissions from "./component/assignments/ViewSubmissions";
+import EditAssignment from "./component/assignments/EditAssignment";
 import './index.css';
 
 // Component to handle conditional header display
@@ -35,42 +37,54 @@ function AppContent() {
 
         {/* Protected Routes */}
         <Route
-          path="/dashboard"
-          element={
-            <ProtectedRoute>
-              <Dashboard />
-            </ProtectedRoute>
-          }
-        />
+  path="/dashboard"
+  element={
+    <ProtectedRoute>
+      <DashboardLayout>
+        <Dashboard />
+      </DashboardLayout>
+    </ProtectedRoute>   
+  }
+/>
+
         <Route
-          path="/create"
-          element={
-            <ProtectedRoute>
-              <CreateAssignment />
-            </ProtectedRoute>
-          }
-        />
+  path="/create-assignment"
+  element={
+    <ProtectedRoute>
+      <DashboardLayout>
+        <CreateAssignment />
+      </DashboardLayout>
+    </ProtectedRoute>
+  }
+/>
         <Route
-          path="/create-classroom"
-          element={
-            <ProtectedRoute>
-              <CreateClassroom />
-            </ProtectedRoute>
-          }
-        />
+  path="/create-classroom"
+  element={
+    <ProtectedRoute>
+      <DashboardLayout>
+        <CreateClassroom />
+      </DashboardLayout>
+    </ProtectedRoute>
+  }
+/>
         <Route
           path="/join-classroom"
           element={
             <ProtectedRoute>
-              <JoinClassroom />
+              <DashboardLayout>
+                <JoinClassroom />
+              </DashboardLayout>
             </ProtectedRoute>
+
           }
         />
         <Route
           path="/classrooms"
           element={
             <ProtectedRoute>
-              <ClassroomList />
+              <DashboardLayout>
+                <ClassroomList />
+              </DashboardLayout>
             </ProtectedRoute>
           }
         />
@@ -78,10 +92,47 @@ function AppContent() {
           path="/submit-assignment"
           element={
             <ProtectedRoute>
-              <SubmitAssignment />
+              <DashboardLayout>
+                <SubmitAssignment />
+              </DashboardLayout>
             </ProtectedRoute>
           }
         />
+        {/* ✅ NEW: Submit page for a specific assignment */}
+<Route
+  path="/submit/:id"
+  element={
+    <ProtectedRoute>
+      <DashboardLayout>
+        <SubmitAssignment />
+      </DashboardLayout>
+    </ProtectedRoute>
+  }
+/>
+        {/* View Submissions Route */}
+<Route
+  path="/view-submissions/:id"
+  element={
+    <ProtectedRoute>
+      <DashboardLayout>
+        <ViewSubmissions />
+      </DashboardLayout>
+    </ProtectedRoute>
+  }
+/>
+
+{/* Edit Assignment Route */}
+<Route
+  path="/edit-assignment/:id"
+  element={
+    <ProtectedRoute>
+      <DashboardLayout>
+        <EditAssignment />
+      </DashboardLayout>
+    </ProtectedRoute>
+  }
+/>
+
       </Routes>
     </div>
   );

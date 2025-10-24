@@ -11,7 +11,7 @@ function JoinClassroom() {
     try {
       const token = localStorage.getItem("token");
       const res = await axios.post(
-        "http://localhost:5000/api/classroom/join",
+        "http://localhost:5000/api/classrooms/join",
         { inviteCode },
         { headers: { Authorization: `Bearer ${token}` } }
       );

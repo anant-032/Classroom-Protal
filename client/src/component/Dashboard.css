@@ -5,7 +5,7 @@ html, body, #root {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  overflow: hidden;
+  /* overflow: hidden; */
   font-family: "Poppins", sans-serif;
   background: #f5f6fa;
 }
@@ -15,8 +15,10 @@ html, body, #root {
   display: flex;
   height: 100vh;
   width: 100%;
-  overflow: hidden;
+  /* overflow: hidden; */
   background: #f5f6fa;
+  overflow-x: hidden;
+  overflow-y: hidden;
 }
 
 /* ===== Sidebar ===== */
@@ -89,11 +91,13 @@ html, body, #root {
 
 /* ===== Main Content ===== */
 .main {
-  margin-left: 250px;
+  margin-left: 150px;
   width: calc(100% - 250px);
   height: 100vh;
+  overflow-y: auto;  /* enables vertical scroll */
+  overflow-x: hidden;
   padding: 30px;
-  overflow-y: auto;
+  /* overflow-y: auto; */
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
