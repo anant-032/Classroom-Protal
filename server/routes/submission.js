@@ -1,5 +1,6 @@
 const express = require("express");
 const multer = require("multer");
+const mongoose = require("mongoose");
 const path = require("path");
 const Submission = require("../models/Submission.js");
 const Assignment = require("../models/Assignment.js");
@@ -90,20 +91,36 @@ router.post("/", upload.single("file"), async (req, res) => {
 // GET /api/submission/:assignmentId
 // TEACHER: View all submissions for a given assignment
 // ------------------------------
-router.get("/:assignmentId", async (req, res) => {
+router.get("/:assignmentId/student/:studentId", async (req, res) => {
   try {
-    const { assignmentId } = req.params;
+    const { assignmentId, studentId } = req.params;
 
-    const submissions = await Submission.find({ assignment: assignmentId })
-      .populate("student", "name email")
-      .populate("assignment", "title");
+    console.log("Fetching feedback for:", { assignmentId, studentId }); // 👈 Add log
 
-    res.status(200).json(submissions);
+    // validate IDs
+    if (
+      !mongoose.Types.ObjectId.isValid(assignmentId) ||
+      !mongoose.Types.ObjectId.isValid(studentId)
+    ) {
+      return res.status(400).json({ message: "Invalid assignmentId or studentId" });
+    }
+
+    const submission = await Submission.findOne({
+      assignment: assignmentId,
+      student: studentId,
+    }).populate("assignment", "title dueDate");
+
+    if (!submission) {
+      return res.status(404).json({ message: "No submission found" });
+    }
+
+    res.status(200).json(submission);
   } catch (error) {
-    console.error("Error fetching submissions:", error);
-    res.status(500).json({ message: "Server error" });
+    console.error("❌ Error fetching student feedback:", error);
+    res.status(500).json({ message: "Server error", error: error.message });
   }
 });
+
 
 // ------------------------------
 // PUT /api/submission/:id
@@ -146,6 +163,60 @@ router.put("/:id", upload.single("file"), async (req, res) => {
     res.status(500).json({ message: "Server error", error: error.message });
   }
 });
+
+// ------------------------------
+// PUT /api/submission/:id/feedback
+// TEACHER: Add or update feedback and grade for a submission
+// ------------------------------
+router.put("/:id/feedback", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { grade, feedback } = req.body;
+
+    const submission = await Submission.findById(id);
+    if (!submission) {
+      return res.status(404).json({ message: "Submission not found" });
+    }
+
+    submission.grade = grade || submission.grade;
+    submission.feedback = feedback || submission.feedback;
+
+    await submission.save();
+
+    res.status(200).json({
+      message: "Feedback updated successfully",
+      submission,
+    });
+  } catch (error) {
+    console.error("❌ Error updating feedback:", error);
+    res.status(500).json({ message: "Server error", error: error.message });
+  }
+});
+
+// ------------------------------
+// GET /api/submission/:assignmentId/student/:studentId
+// STUDENT: Get feedback for a specific assignment
+// ------------------------------
+router.get("/:assignmentId/student/:studentId", async (req, res) => {
+  try {
+    const { assignmentId, studentId } = req.params;
+
+    const submission = await Submission.findOne({
+      assignment: assignmentId,
+      student: studentId,
+    }).populate("assignment", "title dueDate");
+
+    if (!submission) {
+      return res.status(404).json({ message: "No submission found" });
+    }
+
+    res.status(200).json(submission);
+  } catch (error) {
+    console.error("❌ Error fetching student feedback:", error);
+    res.status(500).json({ message: "Server error", error: error.message });
+  }
+});
+
 
 
 module.exports = router;

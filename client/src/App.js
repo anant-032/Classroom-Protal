@@ -1,3 +1,4 @@
+import './index.css';
 import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
 import Login from "./component/Login";
 import Register from "./component/Register";
@@ -8,11 +9,10 @@ import JoinClassroom from "./component/JoinClassroom";
 import ClassroomList from "./component/ClassroomList";
 import SubmitAssignment from "./component/assignments/SubmitAssignment";
 import DashboardLayout from "./component/DashboardLayout";
-
 import ProtectedRoute from "./component/ProtectedRoute";
 import ViewSubmissions from "./component/assignments/ViewSubmissions";
 import EditAssignment from "./component/assignments/EditAssignment";
-import './index.css';
+import ViewFeedback from "./component/assignments/ViewFeedback";
 
 // Component to handle conditional header display
 function AppContent() {
@@ -34,7 +34,7 @@ function AppContent() {
         <Route path="/" element={<Login />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-
+        <Route path="/view-feedback/:assignmentId" element={<ViewFeedback />} />
         {/* Protected Routes */}
         <Route
   path="/dashboard"

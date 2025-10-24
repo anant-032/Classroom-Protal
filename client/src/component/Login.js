@@ -28,6 +28,8 @@ function Login() {
 
       localStorage.setItem("token", res.data.token);
       localStorage.setItem("user", JSON.stringify(res.data.user));
+      localStorage.setItem("userId", res.data.user.id);
+      localStorage.setItem("role", res.data.user.role);
       navigate("/dashboard");
     } catch (err) {
       console.error("Login error:", err);

@@ -21,9 +21,14 @@ const submissionSchema = new mongoose.Schema(
       required: true,
     },
     grade: {
-      type: Number,
-      default: null,
+      type: String,
+      default: "",
     },
+    feedback: {
+      type: String,
+      default: "",
+    },
+
   },
   { timestamps: true }
 );
