@@ -120,6 +120,17 @@ function AppContent() {
     </ProtectedRoute>
   }
 />
+<Route
+  path="/view-feedback/:id"
+  element={
+    <ProtectedRoute>
+      <DashboardLayout>
+        <ViewSubmissions />
+      </DashboardLayout>
+    </ProtectedRoute>
+  }
+/>
+
 
 {/* Edit Assignment Route */}
 <Route

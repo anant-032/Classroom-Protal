@@ -80,12 +80,12 @@ function ViewSubmissions() {
                   </td>
                   <td style={{ border: "1px solid #ddd", padding: "8px" }}>
                     <a
-                      href={s.fileUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      style={{ color: "#007bff" }}
+                    href={`http://localhost:5000${s.fileUrl}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{ color: "#007bff" }}
                     >
-                      View File
+                    View File
                     </a>
                   </td>
                   <td style={{ border: "1px solid #ddd", padding: "8px" }}>

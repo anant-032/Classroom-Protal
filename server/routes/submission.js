@@ -194,6 +194,34 @@ router.put("/:id/feedback", async (req, res) => {
 });
 
 // ------------------------------
+// GET /api/submission/:assignmentId
+// TEACHER: Get all submissions for an assignment
+// ------------------------------
+router.get("/:assignmentId", async (req, res) => {
+  try {
+    const { assignmentId } = req.params;
+
+    if (!mongoose.Types.ObjectId.isValid(assignmentId)) {
+      return res.status(400).json({ message: "Invalid assignment ID" });
+    }
+
+    const submissions = await Submission.find({ assignment: assignmentId })
+      .populate("student", "name email")
+      .populate("assignment", "title dueDate");
+
+    if (!submissions || submissions.length === 0) {
+      return res.status(404).json({ message: "No submissions found" });
+    }
+
+    res.status(200).json(submissions);
+  } catch (error) {
+    console.error("❌ Error fetching submissions:", error);
+    res.status(500).json({ message: "Server error", error: error.message });
+  }
+});
+
+
+// ------------------------------
 // GET /api/submission/:assignmentId/student/:studentId
 // STUDENT: Get feedback for a specific assignment
 // ------------------------------
@@ -216,7 +244,5 @@ router.get("/:assignmentId/student/:studentId", async (req, res) => {
     res.status(500).json({ message: "Server error", error: error.message });
   }
 });
-
-
 
 module.exports = router;

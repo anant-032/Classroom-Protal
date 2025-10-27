@@ -95,5 +95,53 @@ router.get("/my", authMiddleware, async (req, res) => {
   }
 });
 
+// ✅ GET single assignment by ID
+router.get("/:id", authMiddleware, async (req, res) => {
+  try {
+    const assignment = await Assignment.findById(req.params.id);
+    if (!assignment) {
+      return res.status(404).json({ message: "Assignment not found" });
+    }
+    res.json(assignment);
+  } catch (error) {
+    console.error("Error fetching assignment:", error);
+    res.status(500).json({ message: "Error fetching assignment" });
+  }
+});
+
+// ✅ UPDATE assignment by ID (only teacher who created it)
+router.put("/:id", authMiddleware, async (req, res) => {
+  try {
+    const user = req.user;
+
+    if (user.role !== "teacher") {
+      return res.status(403).json({ message: "Only teachers can update assignments" });
+    }
+
+    const { title, description, dueDate } = req.body;
+    const assignment = await Assignment.findById(req.params.id);
+
+    if (!assignment) {
+      return res.status(404).json({ message: "Assignment not found" });
+    }
+
+    // Optional: ensure the teacher who created it is editing it
+    if (assignment.createdBy.toString() !== user._id.toString()) {
+      return res.status(403).json({ message: "You can only edit your own assignments" });
+    }
+
+    assignment.title = title || assignment.title;
+    assignment.description = description || assignment.description;
+    assignment.dueDate = dueDate || assignment.dueDate;
+
+    await assignment.save();
+
+    res.json({ message: "Assignment updated successfully", assignment });
+  } catch (error) {
+    console.error("Error updating assignment:", error);
+    res.status(500).json({ message: "Error updating assignment" });
+  }
+});
+
 
 module.exports = router;

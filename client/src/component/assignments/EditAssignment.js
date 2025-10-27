@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import api from "../../api/axios";
+import DashboardLayout from "../DashboardLayout"; // ✅ import layout
 
 function EditAssignment() {
   const { id } = useParams();
@@ -49,55 +50,70 @@ function EditAssignment() {
   if (loading) return <p>Loading assignment...</p>;
 
   return (
-    <div style={{ padding: "20px" }}>
-      <h2>Edit Assignment</h2>
-      <form onSubmit={handleSubmit}>
-        <div style={{ marginBottom: "10px" }}>
-          <label>Title:</label>
-          <input
-            type="text"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            style={{ width: "100%", padding: "8px" }}
-            required
-          />
-        </div>
+    <DashboardLayout> {/* ✅ wrap inside layout */}
+      <div
+        style={{
+          maxWidth: "600px",
+          margin: "40px auto",
+          background: "#fff",
+          padding: "30px",
+          borderRadius: "12px",
+          boxShadow: "0 4px 10px rgba(0,0,0,0.1)",
+        }}
+      >
+        <h2 style={{ textAlign: "center", marginBottom: "20px" }}>
+          Edit Assignment
+        </h2>
+        <form onSubmit={handleSubmit}>
+          <div style={{ marginBottom: "15px" }}>
+            <label>Title:</label>
+            <input
+              type="text"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              style={{ width: "100%", padding: "10px" }}
+              required
+            />
+          </div>
 
-        <div style={{ marginBottom: "10px" }}>
-          <label>Description:</label>
-          <textarea
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-            style={{ width: "100%", padding: "8px" }}
-            required
-          />
-        </div>
+          <div style={{ marginBottom: "15px" }}>
+            <label>Description:</label>
+            <textarea
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              style={{ width: "100%", padding: "10px" }}
+              required
+            />
+          </div>
 
-        <div style={{ marginBottom: "10px" }}>
-          <label>Due Date:</label>
-          <input
-            type="date"
-            value={dueDate}
-            onChange={(e) => setDueDate(e.target.value)}
-            style={{ width: "100%", padding: "8px" }}
-            required
-          />
-        </div>
+          <div style={{ marginBottom: "20px" }}>
+            <label>Due Date:</label>
+            <input
+              type="date"
+              value={dueDate}
+              onChange={(e) => setDueDate(e.target.value)}
+              style={{ width: "100%", padding: "10px" }}
+              required
+            />
+          </div>
 
-        <button
-          type="submit"
-          style={{
-            backgroundColor: "#007bff",
-            color: "white",
-            padding: "10px 20px",
-            border: "none",
-            cursor: "pointer",
-          }}
-        >
-          Update Assignment
-        </button>
-      </form>
-    </div>
+          <button
+            type="submit"
+            style={{
+              width: "100%",
+              backgroundColor: "#007bff",
+              color: "white",
+              padding: "10px",
+              border: "none",
+              borderRadius: "6px",
+              cursor: "pointer",
+            }}
+          >
+            Update Assignment
+          </button>
+        </form>
+      </div>
+    </DashboardLayout>
   );
 }
 
