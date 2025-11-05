@@ -18,6 +18,12 @@ const assignmentRoutes = require("./routes/assignments");
 const classroomRoutes = require("./routes/classroom");
 const submissionRoutes = require("./routes/submission");
 
+
+app.get("/",(req,res)=>{
+  console.log("api hit")
+  res.send("Server is running on 5000")
+})
+
 // Use route files
 app.use("/api/auth", authRoutes);
 app.use("/api/assignments", assignmentRoutes);
